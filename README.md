@@ -1,5 +1,5 @@
 A Portfolio of some of my projects
-[https://ojigs.netlify.app]ojigs.netlift.app
+ojigs.netlift.app(https://ojigs.netlify.app)
 
 
 
