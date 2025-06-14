@@ -1,1293 +1,267 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>OJIGS - Fullstack Engineer</title>
-	<link href="./assets/css/output.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
-		* {
-			cursor: none;
-		}
-
-		/* Mobile cursor fix */
-		@media (max-width: 768px) {
-			* {
-				cursor: auto !important;
-			}
-
-			.cursor,
-			.cursor-trail {
-				display: none !important;
-			}
-		}
-
-		body {
-			font-family: 'Rajdhani', sans-serif;
-			background: #0a0a0a;
-			overflow-x: hidden;
-		}
-
-		.orbitron {
-			font-family: 'Orbitron', monospace;
-		}
-
-		/* Custom cursor */
-		.cursor {
-			position: fixed;
-			width: 20px;
-			height: 20px;
-			background: #00ff88;
-			border-radius: 50%;
-			pointer-events: none;
-			z-index: 9999;
-			mix-blend-mode: difference;
-			transition: transform 0.1s ease;
-		}
-
-		.cursor-trail {
-			position: fixed;
-			width: 4px;
-			height: 4px;
-			background: #ff0080;
-			border-radius: 50%;
-			pointer-events: none;
-			z-index: 9998;
-			transition: opacity 0.5s ease;
-		}
-
-		/* Grid overlay - optimized for mobile */
-		.grid-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-image:
-				linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
-			background-size: 50px 50px;
-			pointer-events: none;
-			z-index: 1;
-		}
-
-		@media (max-width: 768px) {
-			.grid-overlay {
-				background-size: 30px 30px;
-				opacity: 0.5;
-			}
-		}
-
-		/* Neon effects - reduced for mobile performance */
-		.neon-text {
-			text-shadow:
-				0 0 5px #00ff88,
-				0 0 10px #00ff88,
-				0 0 15px #00ff88,
-				0 0 20px #00ff88;
-		}
-
-		@media (max-width: 768px) {
-			.neon-text {
-				text-shadow:
-					0 0 3px #00ff88,
-					0 0 6px #00ff88;
-			}
-		}
-
-		.neon-border {
-			border: 2px solid #00ff88;
-			box-shadow:
-				0 0 10px #00ff88,
-				inset 0 0 10px rgba(0, 255, 136, 0.1);
-		}
-
-		.neon-pink {
-			color: #ff0080;
-			text-shadow:
-				0 0 5px #ff0080,
-				0 0 10px #ff0080,
-				0 0 15px #ff0080;
-		}
-
-		.neon-cyan {
-			color: #00ffff;
-			text-shadow:
-				0 0 5px #00ffff,
-				0 0 10px #00ffff,
-				0 0 15px #00ffff;
-		}
-
-		/* Holographic text - performance optimized */
-		.holographic {
-			background: linear-gradient(45deg, #00ff88, #ff0080, #00ffff, #ff0080, #00ff88);
-			background-size: 400% 400%;
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-clip: text;
-			animation: hologram 3s ease-in-out infinite;
-		}
-
-		@keyframes hologram {
-
-			0%,
-			100% {
-				background-position: 0% 50%;
-			}
-
-			50% {
-				background-position: 100% 50%;
-			}
-		}
-
-		/* Reduced motion for accessibility */
-		@media (prefers-reduced-motion: reduce) {
-			.holographic {
-				animation: none;
-				background: #00ff88;
-				background-clip: text;
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-			}
-		}
-
-		/* Pulsing borders */
-		.pulse-border {
-			position: relative;
-			overflow: hidden;
-		}
-
-		.pulse-border::before {
-			content: '';
-			position: absolute;
-			top: -2px;
-			left: -2px;
-			right: -2px;
-			bottom: -2px;
-			background: linear-gradient(45deg, #00ff88, #ff0080, #00ffff, #ff0080);
-			z-index: -1;
-			animation: pulse-glow 2s linear infinite;
-		}
-
-		@keyframes pulse-glow {
-			0% {
-				opacity: 0.5;
-			}
-
-			50% {
-				opacity: 1;
-			}
-
-			100% {
-				opacity: 0.5;
-			}
-		}
-
-		/* Particles - mobile optimized */
-		.particles {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			pointer-events: none;
-		}
-
-		.particle {
-			position: absolute;
-			width: 2px;
-			height: 2px;
-			background: #00ff88;
-			animation: float 6s infinite linear;
-		}
-
-		@keyframes float {
-			0% {
-				transform: translateY(100vh) rotate(0deg);
-				opacity: 0;
-			}
-
-			10% {
-				opacity: 1;
-			}
-
-			90% {
-				opacity: 1;
-			}
-
-			100% {
-				transform: translateY(-100px) rotate(360deg);
-				opacity: 0;
-			}
-		}
-
-		/* Mobile particle reduction */
-		@media (max-width: 768px) {
-			.particles {
-				display: none;
-			}
-		}
-
-		/* Morphing sections - mobile safe */
-		.morph-section {
-			clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
-			transition: all 0.6s ease;
-		}
-
-		@media (hover: hover) {
-			.morph-section:hover {
-				clip-path: polygon(0 0, 100% 0, 100% 100%, 0 95%);
-			}
-		}
-
-		/* Spotlight effect - mobile disabled */
-		.spotlight {
-			position: fixed;
-			width: 600px;
-			height: 600px;
-			background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-			pointer-events: none;
-			z-index: 2;
-			transition: all 0.1s ease;
-		}
-
-		@media (max-width: 768px) {
-			.spotlight {
-				display: none;
-			}
-		}
-
-		/* Button effects - improved accessibility */
-		.cyber-btn {
-			position: relative;
-			background: transparent;
-			border: 2px solid #00ff88;
-			color: #00ff88;
-			padding: 12px 30px;
-			font-family: 'Orbitron', monospace;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			transition: all 0.3s ease;
-			overflow: hidden;
-			cursor: pointer;
-			min-height: 48px;
-			/* Touch target size */
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.cyber-btn::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, #00ff88, transparent);
-			transition: left 0.5s ease;
-		}
-
-		@media (hover: hover) {
-			.cyber-btn:hover::before {
-				left: 100%;
-			}
-
-			.cyber-btn:hover {
-				color: #0a0a0a;
-				background: #00ff88;
-				box-shadow: 0 0 20px #00ff88;
-			}
-		}
-
-		.cyber-btn:focus {
-			outline: 2px solid #00ff88;
-			outline-offset: 2px;
-		}
-
-		/* Project cards - improved responsiveness */
-		.project-card {
-			background: rgba(10, 10, 10, 0.8);
-			border: 1px solid rgba(0, 255, 136, 0.3);
-			backdrop-filter: blur(10px);
-			transition: all 0.3s ease;
-			position: relative;
-			overflow: hidden;
-			min-height: 300px;
-		}
-
-		.project-card::before {
-			content: '';
-			position: absolute;
-			top: -50%;
-			left: -50%;
-			width: 200%;
-			height: 200%;
-			background: linear-gradient(45deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-			transform: rotate(45deg);
-			transition: all 0.6s ease;
-			opacity: 0;
-		}
-
-		@media (hover: hover) {
-			.project-card:hover::before {
-				animation: scan 1.5s ease-in-out;
-			}
-
-			.project-card:hover {
-				border-color: #00ff88;
-				box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-				transform: translateY(-5px);
-			}
-		}
-
-		@keyframes scan {
-			0% {
-				transform: translateX(-100%) translateY(-100%) rotate(45deg);
-				opacity: 0;
-			}
-
-			50% {
-				opacity: 1;
-			}
-
-			100% {
-				transform: translateX(100%) translateY(100%) rotate(45deg);
-				opacity: 0;
-			}
-		}
-
-		/* Glitch effect - performance optimized */
-		.glitch {
-			position: relative;
-			display: inline-block;
-		}
-
-		.glitch::before,
-		.glitch::after {
-			content: attr(data-text);
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			opacity: 0.8;
-		}
-
-		.glitch::before {
-			color: #ff0080;
-			animation: glitch-1 0.5s infinite linear alternate-reverse;
-		}
-
-		.glitch::after {
-			color: #00ffff;
-			animation: glitch-2 0.5s infinite linear alternate-reverse;
-		}
-
-		@keyframes glitch-1 {
-			0% {
-				clip-path: inset(40% 0 61% 0);
-			}
-
-			25% {
-				clip-path: inset(92% 0 1% 0);
-			}
-
-			50% {
-				clip-path: inset(43% 0 1% 0);
-			}
-
-			75% {
-				clip-path: inset(25% 0 58% 0);
-			}
-
-			100% {
-				clip-path: inset(58% 0 43% 0);
-			}
-		}
-
-		@keyframes glitch-2 {
-			0% {
-				clip-path: inset(5% 0 67% 0);
-			}
-
-			25% {
-				clip-path: inset(87% 0 4% 0);
-			}
-
-			50% {
-				clip-path: inset(64% 0 26% 0);
-			}
-
-			75% {
-				clip-path: inset(16% 0 15% 0);
-			}
-
-			100% {
-				clip-path: inset(76% 0 21% 0);
-			}
-		}
-
-		/* Loading animation */
-		.loading-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100vh;
-			background: #0a0a0a;
-			z-index: 10000;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-direction: column;
-		}
-
-		.loading-text {
-			font-size: 2rem;
-			margin-bottom: 2rem;
-		}
-
-		@media (max-width: 768px) {
-			.loading-text {
-				font-size: 1.5rem;
-				text-align: center;
-				padding: 0 1rem;
-			}
-		}
-
-		.loading-bar {
-			width: min(300px, 80vw);
-			height: 4px;
-			background: rgba(0, 255, 136, 0.2);
-			border-radius: 2px;
-			overflow: hidden;
-		}
-
-		.loading-progress {
-			height: 100%;
-			background: linear-gradient(90deg, #00ff88, #00ffff);
-			animation: loading 3s ease-in-out forwards;
-		}
-
-		@keyframes loading {
-			0% {
-				width: 0%;
-			}
-
-			100% {
-				width: 100%;
-			}
-		}
-
-		/* Hero section responsiveness */
-		.hero-title {
-			font-size: clamp(3rem, 8vw, 8rem);
-			line-height: 0.9;
-		}
-
-		.hero-subtitle {
-			font-size: clamp(2rem, 6vw, 6rem);
-			line-height: 0.9;
-		}
-
-		.hero-description {
-			font-size: clamp(1.125rem, 3vw, 2rem);
-		}
-
-		/* Navigation improvements */
-		.nav-link {
-			position: relative;
-			padding: 0.5rem 1rem;
-			transition: all 0.3s ease;
-		}
-
-		.nav-link::after {
-			content: '';
-			position: absolute;
-			bottom: 0;
-			left: 50%;
-			width: 0;
-			height: 2px;
-			background: #00ff88;
-			transition: all 0.3s ease;
-			transform: translateX(-50%);
-		}
-
-		@media (hover: hover) {
-			.nav-link:hover::after {
-				width: 100%;
-			}
-		}
-
-		/* Mobile menu improvements */
-		.mobile-menu {
-			backdrop-filter: blur(20px);
-			border-radius: 0.5rem;
-			background: rgba(0, 0, 0, 0.9);
-		}
-
-		.mobile-menu a {
-			padding: 1rem;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			transition: all 0.3s ease;
-		}
-
-		.mobile-menu a:last-child {
-			border-bottom: none;
-		}
-
-		.mobile-menu a:hover {
-			background: rgba(0, 255, 136, 0.1);
-			padding-left: 1.5rem;
-		}
-
-		/* Form improvements */
-		.form-input {
-			width: 100%;
-			padding: 0.75rem;
-			background: transparent;
-			border: 2px solid rgba(255, 255, 255, 0.2);
-			border-radius: 0.5rem;
-			color: white;
-			font-size: 1rem;
-			transition: all 0.3s ease;
-		}
-
-		.form-input:focus {
-			outline: none;
-			border-color: #00ff88;
-			box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-		}
-
-		.form-input::placeholder {
-			color: rgba(255, 255, 255, 0.5);
-		}
-
-		/* Accessibility improvements */
-		.skip-link {
-			position: absolute;
-			top: -40px;
-			left: 6px;
-			background: #00ff88;
-			color: #000;
-			padding: 8px;
-			text-decoration: none;
-			border-radius: 4px;
-			z-index: 10001;
-		}
-
-		.skip-link:focus {
-			top: 6px;
-		}
-
-		/* Performance optimization for animations */
-		@media (prefers-reduced-motion: reduce) {
-			* {
-				animation-duration: 0.01ms !important;
-				animation-iteration-count: 1 !important;
-				transition-duration: 0.01ms !important;
-			}
-		}
-
-		/* Fallback for browsers that don't support backdrop-filter */
-		@supports not (backdrop-filter: blur(10px)) {
-			.project-card {
-				background: rgba(10, 10, 10, 0.95);
-			}
-
-			.mobile-menu {
-				background: rgba(0, 0, 0, 0.95);
-			}
-		}
-
-		/* Fix for touch devices */
-		@media (hover: none) {
-			.cyber-btn:active {
-				background: #00ff88;
-				color: #0a0a0a;
-			}
-
-			.project-card:active {
-				transform: scale(0.98);
-			}
-		}
-
-		/* Matrix canvas optimization */
-		.matrix-canvas {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			pointer-events: none;
-			z-index: 1;
-			opacity: 0.1;
-		}
-
-		@media (max-width: 768px) {
-			.matrix-canvas {
-				display: none;
-			}
-		}
-	</style>
+	<title>Ojigs</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="Meet Emmanuel Ojighoro, your next Full Stack Software Engineer">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="shortcut icon" href="favicon.ico" />
 </head>
 
-<body>
-	<!-- Skip link for accessibility -->
-	<a href="#main-content" class="skip-link">Skip to main content</a>
+<body class="is-preload">
 
-	<!-- Loading Screen -->
-	<div class="loading-overlay" id="loadingScreen">
-		<div class="loading-text neon-text orbitron">INITIALIZING SYSTEM</div>
-		<div class="loading-bar">
-			<div class="loading-progress"></div>
+	<!-- Header -->
+	<div id="header">
+
+		<div class="top">
+
+			<!-- Logo -->
+			<div id="logo">
+				<span class="image avatar48"><img src="images/profile.png" alt="Ojigs avatar" /></span>
+				<h1 id="title">OJIGS</h1>
+				<p>Software Engineer</p>
+			</div>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul>
+					<li><a href="#top" id="top-link"><span class="icon solid fa-home">Home</span></a></li>
+					<li><a href="#portfolio" id="portfolio-link"><span class="icon solid fa-th">Portfolio</span></a>
+					</li>
+					<li><a href="#about" id="about-link"><span class="icon solid fa-user">About Me</span></a></li>
+					<li><a href="#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a>
+					</li>
+					<!--<li><a href="#resume" id="resume-link"><span class="icon solid fa-file-alt">Resume</span></a></li>-->
+				</ul>
+			</nav>
+
 		</div>
-		<div class="text-sm mt-4 text-gray-400">Welcome to the Matrix...</div>
+
+		<div class="bottom">
+
+			<!-- Social Icons -->
+			<ul class="icons">
+				<li><a href="https://www.twitter.com/emmaojigs" class="icon brands fa-twitter"><span
+							class="label">Twitter</span></a></li>
+				<li><a href="https://www.facebook.com/awesomeemoj" class="icon brands fa-facebook-f"><span
+							class="label">Facebook</span></a></li>
+				<li><a href="https://github.com/ojigs" class="icon brands fa-github"><span
+							class="label">Github</span></a></li>
+				<li><a href="https://www.linkedin.com/in/emmanuelojighoro" class="icon brands fa-linkedin"><span
+							class="label">LinkedIn</span></a></li>
+				<!-- <li><a href="https://www.discordapp.com/users/ojigs17" class="icon brands fa-discord"><span class="label">Email</span></a></li> -->
+			</ul>
+
+		</div>
+
 	</div>
 
-	<!-- Custom Cursor -->
-	<div class="cursor" id="cursor"></div>
+	<!-- Main -->
+	<div id="main">
 
-	<!-- Cursor Trail -->
-	<div id="cursorTrail"></div>
+		<!-- Intro -->
+		<section id="top" class="one dark cover">
+			<div class="container">
 
-	<!-- Grid Overlay -->
-	<div class="grid-overlay"></div>
+				<header>
+					<h2 class="alt">Hi, I'm <strong>Emmanuel Ojighoro</strong>, a Fullstack Software Engineer.</h2>
+					<p>I specialize in developing web applications using <br />
+						React, Node.js, MongoDB, and SQL.</p>
+				</header>
 
-	<!-- Spotlight -->
-	<div class="spotlight" id="spotlight"></div>
+				<footer>
+					<a href="#portfolio" class="button scrolly">Check out my Portfolio</a>
+				</footer>
 
-	<!-- Particles -->
-	<div class="particles" id="particles"></div>
-
-	<!-- Navigation -->
-	<nav class="fixed top-0 left-0 w-full z-50 p-6">
-		<div class="flex justify-between items-center">
-			<div class="orbitron text-2xl font-bold neon-text">OJIGS</div>
-			<div class="hidden md:flex space-x-8">
-				<a href="#home" class="nav-link text-gray-300 hover:text-white transition-colors">HOME</a>
-				<a href="#about" class="nav-link text-gray-300 hover:text-white transition-colors">ABOUT</a>
-				<a href="#projects" class="nav-link text-gray-300 hover:text-white transition-colors">PROJECTS</a>
-				<a href="#contact" class="nav-link text-gray-300 hover:text-white transition-colors">CONTACT</a>
-			</div>
-			<div class="md:hidden">
-				<button class="text-white text-2xl" id="mobileMenuBtn">
-					<i class="fas fa-bars"></i>
-				</button>
-			</div>
-		</div>
-
-		<!-- Mobile Menu -->
-		<div class="mobile-menu hidden md:hidden mt-4 p-4 rounded bg-black/80 backdrop-blur-md neon-border">
-			<a href="#home" class="block py-2 text-gray-300 hover:text-white">HOME</a>
-			<a href="#about" class="block py-2 text-gray-300 hover:text-white">ABOUT</a>
-			<a href="#projects" class="block py-2 text-gray-300 hover:text-white">PROJECTS</a>
-			<a href="#contact" class="block py-2 text-gray-300 hover:text-white">CONTACT</a>
-		</div>
-	</nav>
-
-	<main id="main-content">
-		<!-- Hero Section -->
-		<section id="home"
-			class="min-h-screen flex items-center justify-center relative morph-section bg-gradient-to-br from-gray-900 via-black to-gray-900">
-			<div class="text-center z-10 px-6">
-				<div class="mb-8">
-					<h1 class="text-6xl md:text-8xl font-black orbitron mb-4">
-						<span class="glitch holographic" data-text="EMMANUEL">EMMANUEL</span>
-					</h1>
-					<h2 class="text-4xl md:text-6xl font-bold orbitron mb-6">
-						<span class="neon-pink">OJIGHORO</span>
-					</h2>
-				</div>
-
-				<div class="text-xl md:text-2xl mb-8 space-y-2">
-					<div class="scramble neon-cyan" data-text="FULLSTACK SOFTWARE ENGINEER">FULLSTACK SOFTWARE ENGINEER
-					</div>
-					<div class="text-gray-400">Specializing in React • Node.js • MongoDB • SQL</div>
-				</div>
-
-				<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-					<button class="cyber-btn" onclick="explodeButton(event)">VIEW PROJECTS</button>
-					<button class="cyber-btn" onclick="explodeButton(event)">DOWNLOAD CV</button>
-				</div>
-
-				<!-- Social Links -->
-				<div class="flex justify-center space-x-6 mt-12">
-					<a href="https://github.com/ojigs"
-						class="text-2xl text-gray-400 hover:text-white transition-colors hover:animate-pulse"
-						aria-label="GitHub Profile" target="_blank" rel="noopener noreferrer">
-						<i class="fab fa-github"></i>
-					</a>
-					<a href="https://www.linkedin.com/in/emmanuelojighoro"
-						class="text-2xl text-gray-400 hover:text-white transition-colors hover:animate-pulse"
-						aria-label="LinkedIn Profile" target="_blank" rel="noopener noreferrer">
-						<i class="fab fa-linkedin"></i>
-					</a>
-					<a href="https://www.twitter.com/emmaojigs"
-						class="text-2xl text-gray-400 hover:text-white transition-colors hover:animate-pulse"
-						aria-label="Twitter Profile" target="_blank" rel="noopener noreferrer">
-						<i class="fab fa-twitter"></i>
-					</a>
-				</div>
-			</div>
-
-			<!-- Scroll Indicator -->
-			<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-				<div class="w-6 h-10 border-2 border-gray-400 rounded-full">
-					<div class="w-1 h-3 bg-gray-400 rounded-full mx-auto mt-2 animate-pulse"></div>
-				</div>
 			</div>
 		</section>
 
-		<!-- About Section -->
-		<section id="about"
-			class="min-h-screen flex items-center morph-section bg-gradient-to-br from-black via-gray-900 to-black relative">
-			<div class="container mx-auto px-6 py-20">
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-					<div class="order-2 lg:order-1">
-						<h2 class="text-5xl font-bold orbitron mb-8 holographic">ABOUT_ME</h2>
+		<!-- Portfolio -->
+		<section id="portfolio" class="two">
+			<div class="container">
 
-						<div class="space-y-6 text-lg text-gray-300 leading-relaxed">
-							<p class="scramble-text">Ready to elevate your company with some tech magic? Whether you're
-								dreaming of a sleek website or a turbocharged full stack web app, I'm your go-to <span
-									class="neon-text">Software Sorcerer!</span></p>
+				<header>
+					<h2>Portfolio</h2>
+				</header>
 
-							<p>As a Full Stack Developer extraordinaire, my bag of tricks includes:</p>
+				<p>Take a look at some of the things I've worked on recently. You can check out the
+					live site on one hand, as well as peek through the source code on my github repository.
+				</p>
 
-							<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
-								<div class="pulse-border p-4 rounded bg-black/50">
-									<h3 class="neon-pink orbitron font-bold mb-2">FRONTEND MAGIC</h3>
-									<p class="text-sm">HTML, CSS, JavaScript, React</p>
-								</div>
-								<div class="pulse-border p-4 rounded bg-black/50">
-									<h3 class="neon-cyan orbitron font-bold mb-2">BACKEND POWER</h3>
-									<p class="text-sm">Node.js, Express.js, MongoDB, SQL</p>
-								</div>
-								<div class="pulse-border p-4 rounded bg-black/50">
-									<h3 class="neon-text orbitron font-bold mb-2">TESTING & DEBUG</h3>
-									<p class="text-sm">Jest, Cypress, Chrome DevTools</p>
-								</div>
-								<div class="pulse-border p-4 rounded bg-black/50">
-									<h3 class="neon-pink orbitron font-bold mb-2">CODE ARTISTRY</h3>
-									<p class="text-sm">Clean, scalable, beautiful code</p>
-								</div>
-							</div>
-
-							<p>I've sprinkled my coding fairy dust on various projects, boosting their value and
-								profitability by a cool <span class="neon-text font-bold">25%</span>. Need a lone wizard
-								or
-								a team player? I'm your enchanting choice.</p>
-						</div>
+				<div class="row">
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="https://jollify.vercel.app/" class="image fit"><img src="images/p_jollify.jpg"
+									alt="engagement tracking software cover image" /></a>
+							<header>
+								<h3>Jollify</h3>
+							</header>
+							<detail>
+								<p>A music streaming and sharing application that offers an immersive listening
+									experience with features like song streaming, playlist creation, artist exploration,
+									and more</p>
+								<a href="https://jollify.vercel.app/">LIVE</a><a
+									href="https://github.com/ojigs/jollify/">REPO</a>
+							</detail>
+						</article>
 					</div>
-
-					<div class="order-1 lg:order-2 flex justify-center">
-						<div class="relative">
-							<div class="w-80 h-80 rounded-full neon-border overflow-hidden">
-								<img src="images/Ojiggs.JPG" alt="Emmanuel Ojighoro" class="w-full h-full object-cover">
-							</div>
-							<div
-								class="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent animate-spin">
-							</div>
-						</div>
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="https://engagetrk.vercel.app/" class="image fit"><img src="images/engagetrk.jpg"
+									alt="engagement tracking software cover image" /></a>
+							<header>
+								<h3>EngageTrk</h3>
+							</header>
+							<detail>
+								<p>EngageTrk - A smart and customizable app to manage your time, productivity, and
+									motivation</p>
+								<a href="https://engagetrk.vercel.app/">LIVE</a><a
+									href="https://github.com/ojigs/engagetrk/">REPO</a>
+							</detail>
+						</article>
+					</div>
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="https://mekanikvillage.vercel.app/" class="image fit"><img
+									src="images/mekanikvillage.jpg" alt="mekanik village cover image" /></a>
+							<header>
+								<h3>Mekanik Village</h3>
+							</header>
+							<detail>
+								<p>E-commerce web application for the largest collection of automobile parts, tools, and
+									accessories</p>
+								<a href="https://mekanikvillage.vercel.app/">LIVE</a><a
+									href="https://github.com/ojigs/mekanikVillage/">REPO</a>
+							</detail>
+						</article>
+					</div>
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="https://www.ojtechnologiesltd.com/" class="image fit"><img src="images/ojtech.jpg"
+									alt="ojtech cover image" /></a>
+							<header>
+								<h3>OJ Technologies LTD</h3>
+							</header>
+							<detail>
+								<p>Fully reponsive website for a fast growing health-tech startup in Africa</p>
+								<a href="https://www.ojtechnologiesltd.com/">LIVE</a><a href="">REPO</a>
+							</detail>
+						</article>
+					</div>
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="" class="image fit"><img src="images/trackit.jpg" alt="trackit cover image" /></a>
+							<header>
+								<h3>Trackit</h3>
+							</header>
+							<detail>
+								<p>Manage your day as e remote worker and keep track of your activities</p>
+								<a href="">LIVE</a><a href="https://github.com/ojigs/trackit/">REPO</a>
+							</detail>
+						</article>
+					</div>
+					<div class="col-6 col-12-mobile">
+						<article class="item">
+							<a href="https://brandii.netlify.app/" class="image fit"><img src="images/brandi.png"
+									alt="brandi" /></a>
+							<header>
+								<h3>Brandi</h3>
+							</header>
+							<detail>
+								<p>Brandi is a branding and marketing website built for Joey to match his wireframe
+									design</p>
+								<a href="https://brandii.netlify.app/">LIVE</a><a
+									href="https://github.com/ojigs/100devs/tree/main/Brandi">REPO</a>
+							</detail>
+						</article>
 					</div>
 				</div>
+
 			</div>
 		</section>
 
-		<!-- Projects Section -->
-		<section id="projects"
-			class="min-h-screen py-20 morph-section bg-gradient-to-br from-gray-900 via-black to-gray-900">
-			<div class="container mx-auto px-6">
-				<h2 class="text-5xl font-bold orbitron text-center mb-16 holographic">PROJECTS</h2>
+		<!-- About Me -->
+		<section id="about" class="three">
+			<div class="container">
 
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					<!-- Jollify -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/p_jollify.jpg" alt="Jollify"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-text">JOLLIFY</h3>
-						<p class="text-gray-300 mb-4">A music streaming and sharing application that offers an immersive
-							listening experience with features like song streaming, playlist creation, and artist
-							exploration.</p>
-						<div class="flex space-x-4">
-							<a href="https://jollify.vercel.app/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="https://github.com/ojigs/jollify/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
+				<header>
+					<h2>About Me</h2>
+				</header>
 
-					<!-- Velstay -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/velstayhms.png" alt="Velstay"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-pink">VELSTAY</h3>
-						<p class="text-gray-300 mb-4">Comprehensive hotel management SaaS platform with booking system,
-							inventory management, and analytics dashboard.</p>
-						<div class="flex space-x-4">
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
+				<a href="#" class="image featured"><img src="images/Ojiggs.JPG" alt="" /></a>
 
-					<!-- Talk to the VC -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/talk2thevc.png" alt="Talk to the VC"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-cyan">TALK TO THE VC</h3>
-						<p class="text-gray-300 mb-4">Secure messaging application facilitating communication between
-							students/staff and the VC of Bayelsa Medical University.</p>
-						<div class="flex space-x-4">
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
-
-					<!-- MMSPhysio-Exercises -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/mmsphysio.png" alt="MMSPhysio"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-text">MMSPHYSIO</h3>
-						<p class="text-gray-300 mb-4">Physiotherapy application to track patient recovery progress with
-							exercise routines and comprehensive landing page.</p>
-						<div class="flex space-x-4">
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="#" class="cyber-btn text-xs py-2 px-4" onclick="explodeButton(event)"
-								target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
-
-					<!-- EngageTrk -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/engagetrk.jpg" alt="EngageTrk"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-pink">ENGAGETRK</h3>
-						<p class="text-gray-300 mb-4">A smart and customizable app to manage your time, productivity,
-							and
-							motivation with advanced tracking features.</p>
-						<div class="flex space-x-4">
-							<a href="https://engagetrk.vercel.app/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="https://github.com/ojigs/engagetrk/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
-
-					<!-- Mekanik Village -->
-					<div class="project-card rounded-lg p-6 group">
-						<div class="relative overflow-hidden rounded mb-4">
-							<img src="images/mekanikvillage.jpg" alt="Mekanik Village"
-								class="w-full h-48 object-cover transition-transform group-hover:scale-110">
-							<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-						</div>
-						<h3 class="text-2xl font-bold orbitron mb-3 neon-cyan">MEKANIK VILLAGE</h3>
-						<p class="text-gray-300 mb-4">E-commerce web application for the largest collection of
-							automobile
-							parts, tools, and accessories.</p>
-						<div class="flex space-x-4">
-							<a href="https://mekanikvillage.vercel.app/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">LIVE</a>
-							<a href="https://github.com/ojigs/mekanikVillage/" class="cyber-btn text-xs py-2 px-4"
-								onclick="explodeButton(event)" target="_blank" rel="noopener noreferrer">REPO</a>
-						</div>
-					</div>
-				</div>
+				<p>Hey there!</p>
+				<p>Ready to elevate your company with some tech magic? Whether you're dreaming of a sleek website or a
+					turbocharged full stack web app, I'm your go-to Software Sorcerer!</p>
+				<p>As a Full Stack Developer extraordinaire, my bag of tricks includes:</p>
+				<ul>
+					<li>Conjuring up front-end magic with HTML, CSS, JavaScript, and React</li>
+					<li>Brewing powerful back-end potions with Node.js, Express.js, MongoDB, and SQL</li>
+					<li>Mastering the art of spellbinding testing, debugging, and troubleshooting</li>
+					<li>Crafting code so beautiful, it's practically poetry</li>
+				</ul>
+				<p>I've sprinkled my coding fairy dust on various projects, boosting their value and profitability by a
+					cool 25%. Need a lone wizard or a team player? I'm your enchanting choice.</p>
+				<p>Let's chat about making your digital dreams a reality! Drop me a line at <a
+						href="mailto:ojighoroemmanuel@gmail.com">my email
+						address</a> or glide through the contact form below. I can't wait to weave some coding spells
+					for you. Cheers to future tech adventures!</p>
 			</div>
 		</section>
 
-		<!-- Contact Section -->
-		<section id="contact"
-			class="min-h-screen flex items-center morph-section bg-gradient-to-br from-black via-gray-900 to-black">
-			<div class="container mx-auto px-6 py-20">
-				<h2 class="text-5xl font-bold orbitron text-center mb-16 holographic">CONTACT_ME</h2>
+		<!-- Contact -->
+		<section id="contact" class="four">
+			<div class="container">
 
-				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-					<div>
-						<h3 class="text-3xl font-bold orbitron mb-6 neon-text">GET IN TOUCH</h3>
-						<p class="text-lg text-gray-300 mb-8">Ready to bring your digital dreams to reality? Let's
-							create
-							something extraordinary together!</p>
+				<header>
+					<h2>Contact</h2>
+				</header>
 
-						<div class="space-y-6">
-							<div class="flex items-center space-x-4">
-								<i class="fas fa-envelope text-2xl neon-pink"></i>
-								<span class="text-gray-300">ojighoroemmanuel@gmail.com</span>
-							</div>
-							<div class="flex items-center space-x-4">
-								<i class="fas fa-map-marker-alt text-2xl neon-cyan"></i>
-								<span class="text-gray-300">Nigeria</span>
-							</div>
-							<div class="flex items-center space-x-4">
-								<i class="fas fa-phone text-2xl neon-text"></i>
-								<span class="text-gray-300">Available for remote work</span>
-							</div>
+				<p>Love the enthusiasm for getting down to business! Fill out this contact form and let's get talking
+					about your
+					business' web development needs.
+				</p>
+
+				<form method="post" data-netlify="true">
+					<div class="row">
+						<div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" /></div>
+						<div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" /></div>
+						<div class="col-12">
+							<textarea name="message" placeholder="Message"></textarea>
+						</div>
+						<div class="col-12">
+							<input type="submit" value="Send Message" />
 						</div>
 					</div>
+				</form>
 
-					<div class="neon-border rounded-lg p-8 bg-black/50">
-						<form method="post" data-netlify="true" class="space-y-6">
-							<div>
-								<input type="text" name="name" placeholder="Your Name"
-									class="w-full p-3 bg-transparent border border-gray-600 rounded focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400">
-							</div>
-							<div>
-								<input type="email" name="email" placeholder="Your Email"
-									class="w-full p-3 bg-transparent border border-gray-600 rounded focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400">
-							</div>
-							<div>
-								<textarea name="message" rows="5" placeholder="Your Message"
-									class="w-full p-3 bg-transparent border border-gray-600 rounded focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400 resize-none"></textarea>
-							</div>
-							<button type="submit" class="cyber-btn w-full" onclick="explodeButton(event)">SEND
-								MESSAGE</button>
-						</form>
-					</div>
-				</div>
 			</div>
 		</section>
-	</main>
 
+	</div>
 
 	<!-- Footer -->
-	<footer class="py-8 bg-black border-t border-gray-800">
-		<div class="container mx-auto px-6 text-center">
-			<p class="text-gray-400">&copy; 2025 OJIGS. All rights reserved. | Designed with <span
-					class="neon-pink">♥</span> and lots of caffeine</p>
-		</div>
-	</footer>
+	<div id="footer">
 
-	<script>
-		// Loading animation
-		window.addEventListener('load', () => {
-			setTimeout(() => {
-				document.getElementById('loadingScreen').style.opacity = '0';
-				setTimeout(() => {
-					document.getElementById('loadingScreen').style.display = 'none';
-				}, 500);
-			}, 3000);
-		});
+		<!-- Copyright -->
+		<ul class="copyright">
+			<li>&copy; Ojigs. All rights reserved.</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
 
-		// Custom cursor
-		const cursor = document.getElementById('cursor');
-		const cursorTrail = document.getElementById('cursorTrail');
-		let trails = [];
+	</div>
 
-		document.addEventListener('mousemove', (e) => {
-			cursor.style.left = e.clientX - 10 + 'px';
-			cursor.style.top = e.clientY - 10 + 'px';
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
 
-			// Create trail
-			const trail = document.createElement('div');
-			trail.className = 'cursor-trail';
-			trail.style.left = e.clientX - 2 + 'px';
-			trail.style.top = e.clientY - 2 + 'px';
-			cursorTrail.appendChild(trail);
-
-			trails.push(trail);
-
-			setTimeout(() => {
-				trail.style.opacity = '0';
-				setTimeout(() => {
-					if (trail.parentNode) {
-						trail.parentNode.removeChild(trail);
-					}
-					trails = trails.filter(t => t !== trail);
-				}, 500);
-			}, 100);
-		});
-
-		// Spotlight effect
-		const spotlight = document.getElementById('spotlight');
-		document.addEventListener('mousemove', (e) => {
-			spotlight.style.left = e.clientX - 300 + 'px';
-			spotlight.style.top = e.clientY - 300 + 'px';
-		});
-
-		// Particles
-		function createParticle() {
-			const particle = document.createElement('div');
-			particle.className = 'particle';
-			particle.style.left = Math.random() * 100 + '%';
-			particle.style.animationDelay = Math.random() * 6 + 's';
-			particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
-
-			const colors = ['#00ff88', '#ff0080', '#00ffff'];
-			particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-			document.getElementById('particles').appendChild(particle);
-
-			setTimeout(() => {
-				if (particle.parentNode) {
-					particle.parentNode.removeChild(particle);
-				}
-			}, 10000);
-		}
-
-		// Create particles periodically
-		setInterval(createParticle, 300);
-
-		// Text scramble effect
-		function scrambleText(element, finalText, duration = 2000) {
-			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
-			let currentText = '';
-			const textLength = finalText.length;
-			let iterations = 0;
-
-			const interval = setInterval(() => {
-				currentText = '';
-
-				for (let i = 0; i < textLength; i++) {
-					if (i < iterations) {
-						currentText += finalText[i];
-					} else {
-						currentText += chars[Math.floor(Math.random() * chars.length)];
-					}
-				}
-
-				element.textContent = currentText;
-
-				if (iterations >= textLength) {
-					clearInterval(interval);
-					element.textContent = finalText;
-				}
-
-				iterations += 1 / 3;
-			}, 50);
-		}
-
-		// Apply scramble effect to elements
-		document.addEventListener('DOMContentLoaded', () => {
-			const scrambleElements = document.querySelectorAll('.scramble');
-			scrambleElements.forEach(el => {
-				const originalText = el.getAttribute('data-text') || el.textContent;
-				el.setAttribute('data-text', originalText);
-
-				const observer = new IntersectionObserver((entries) => {
-					entries.forEach(entry => {
-						if (entry.isIntersecting) {
-							scrambleText(entry.target, originalText);
-							observer.unobserve(entry.target);
-						}
-					});
-				});
-
-				observer.observe(el);
-			});
-		});
-
-		// Button explosion effect
-		function explodeButton(event) {
-			const button = event.target;
-			const rect = button.getBoundingClientRect();
-			const centerX = rect.left + rect.width / 2;
-			const centerY = rect.top + rect.height / 2;
-
-			// Create explosion particles
-			for (let i = 0; i < 20; i++) {
-				const particle = document.createElement('div');
-				particle.style.position = 'fixed';
-				particle.style.left = centerX + 'px';
-				particle.style.top = centerY + 'px';
-				particle.style.width = '4px';
-				particle.style.height = '4px';
-				particle.style.background = '#00ff88';
-				particle.style.borderRadius = '50%';
-				particle.style.pointerEvents = 'none';
-				particle.style.zIndex = '9999';
-
-				const angle = (i / 20) * Math.PI * 2;
-				const velocity = Math.random() * 100 + 50;
-				const vx = Math.cos(angle) * velocity;
-				const vy = Math.sin(angle) * velocity;
-
-				document.body.appendChild(particle);
-
-				let x = 0, y = 0;
-				const animate = () => {
-					x += vx * 0.02;
-					y += vy * 0.02 + 2; // gravity
-
-					particle.style.transform = `translate(${x}px, ${y}px)`;
-					particle.style.opacity = Math.max(0, 1 - Math.abs(y) / 200);
-
-					if (parseFloat(particle.style.opacity) > 0) {
-						requestAnimationFrame(animate);
-					} else {
-						document.body.removeChild(particle);
-					}
-				};
-
-				requestAnimationFrame(animate);
-			}
-
-			// Button shake effect
-			button.style.animation = 'none';
-			button.offsetHeight; // Trigger reflow
-			button.style.animation = 'shake 0.5s ease-in-out';
-		}
-
-		// Add shake animation
-		const style = document.createElement('style');
-		style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                25% { transform: translateX(-5px); }
-                75% { transform: translateX(5px); }
-            }
-        `;
-		document.head.appendChild(style);
-
-		// Smooth scrolling
-		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-			anchor.addEventListener('click', function (e) {
-				e.preventDefault();
-				const target = document.querySelector(this.getAttribute('href'));
-				if (target) {
-					target.scrollIntoView({
-						behavior: 'smooth',
-						block: 'start'
-					});
-				}
-			});
-		});
-
-		// Mobile menu toggle
-		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-		const mobileMenu = document.querySelector('.mobile-menu');
-
-		mobileMenuBtn.addEventListener('click', () => {
-			mobileMenu.classList.toggle('hidden');
-		});
-
-		// Parallax scrolling
-		window.addEventListener('scroll', () => {
-			const scrolled = window.pageYOffset;
-			const sections = document.querySelectorAll('.morph-section');
-
-			sections.forEach((section, index) => {
-				const rate = scrolled * -0.5;
-				section.style.transform = `translate3d(0, ${rate}px, 0)`;
-			});
-		});
-
-		// Project card hover effects
-		document.querySelectorAll('.project-card').forEach(card => {
-			card.addEventListener('mouseenter', () => {
-				// Add sound effect simulation (visual feedback)
-				card.style.transform = 'translateY(-10px) scale(1.02)';
-				card.style.transition = 'all 0.3s ease';
-			});
-
-			card.addEventListener('mouseleave', () => {
-				card.style.transform = 'translateY(0) scale(1)';
-			});
-		});
-
-		// Glitch effect for main title
-		const glitchElements = document.querySelectorAll('.glitch');
-		glitchElements.forEach(el => {
-			setInterval(() => {
-				if (Math.random() > 0.95) {
-					el.style.animation = 'none';
-					el.offsetHeight; // Trigger reflow
-					el.style.animation = 'glitch 0.3s ease-in-out';
-				}
-			}, 100);
-		});
-
-		// Add typing sound simulation
-		document.querySelectorAll('input, textarea').forEach(input => {
-			input.addEventListener('keydown', () => {
-				// Visual feedback for typing
-				input.style.boxShadow = '0 0 10px rgba(0, 255, 136, 0.5)';
-				setTimeout(() => {
-					input.style.boxShadow = 'none';
-				}, 100);
-			});
-		});
-
-		// Initialize holographic text animation
-		const holographicElements = document.querySelectorAll('.holographic');
-		holographicElements.forEach(el => {
-			el.addEventListener('mouseenter', () => {
-				el.style.animationDuration = '0.5s';
-			});
-
-			el.addEventListener('mouseleave', () => {
-				el.style.animationDuration = '3s';
-			});
-		});
-
-		// Add matrix rain effect on load
-		function createMatrixRain() {
-			const canvas = document.createElement('canvas');
-			canvas.style.position = 'fixed';
-			canvas.style.top = '0';
-			canvas.style.left = '0';
-			canvas.style.width = '100%';
-			canvas.style.height = '100%';
-			canvas.style.pointerEvents = 'none';
-			canvas.style.zIndex = '1';
-			canvas.style.opacity = '0.1';
-
-			document.body.appendChild(canvas);
-
-			const ctx = canvas.getContext('2d');
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
-
-			const columns = Math.floor(canvas.width / 20);
-			const drops = Array(columns).fill(1);
-
-			function draw() {
-				ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-				ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-				ctx.fillStyle = '#00ff88';
-				ctx.font = '15px monospace';
-
-				for (let i = 0; i < drops.length; i++) {
-					const text = String.fromCharCode(Math.random() * 128);
-					ctx.fillText(text, i * 20, drops[i] * 20);
-
-					if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-						drops[i] = 0;
-					}
-					drops[i]++;
-				}
-			}
-
-			setInterval(draw, 100);
-		}
-
-		// Initialize matrix rain after a delay
-		setTimeout(createMatrixRain, 4000);
-	</script>
 </body>
 
 </html>
