@@ -2859,3 +2859,107 @@ button:active,
 	font-weight: bold;
 	width: 1em;
 }
+
+/* Credentials / Credly Badge Section */
+
+.credentials-badges {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+}
+
+.badge-card {
+	display: flex;
+	align-items: flex-start;
+	gap: 2.5em;
+	background: #fafafa;
+	border: 1px solid #e8e8e8;
+	border-left: 4px solid #e27689;
+	border-radius: 6px;
+	padding: 2em 2.5em;
+	-webkit-transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+	-ms-transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+	transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.badge-card:hover {
+	box-shadow: 0 6px 24px rgba(226, 118, 137, 0.12);
+	transform: translateY(-2px);
+}
+
+.badge-wrapper {
+	flex-shrink: 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	min-width: 150px;
+}
+
+/* Keep the Credly iframe from overflowing its container */
+.badge-wrapper iframe {
+	display: block;
+	border: none;
+}
+
+.badge-info {
+	flex: 1;
+}
+
+.badge-info h3 {
+	margin-bottom: 0.3em;
+	color: #444;
+	font-size: 1.35em;
+}
+
+.badge-info p {
+	margin-bottom: 1em;
+	color: #666;
+	font-size: 0.9em;
+	line-height: 1.6em;
+}
+
+.badge-info p:first-of-type {
+	font-size: 0.8em;
+	color: #999;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	margin-bottom: 0.75em;
+}
+
+.badge-info .button {
+	display: inline-block;
+	border: 1px solid #e27689;
+	border-bottom: 1px solid #e27689;
+	color: #e27689;
+	padding: 0.5em 1.25em;
+	border-radius: 4px;
+	font-size: 0.8em;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	-webkit-transition: background 0.25s ease-in-out, color 0.25s ease-in-out;
+	transition: background 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.badge-info .button:hover {
+	background: #e27689;
+	color: #fff;
+	border-bottom-color: #e27689;
+}
+
+@media screen and (max-width: 736px) {
+	.badge-card {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 1.5em;
+		gap: 1.5em;
+	}
+
+	.badge-wrapper {
+		min-width: unset;
+	}
+
+	.badge-info p:first-of-type {
+		text-align: center;
+	}
+}
